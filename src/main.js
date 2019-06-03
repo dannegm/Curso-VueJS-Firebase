@@ -8,6 +8,10 @@ import 'bulma'
 
 Vue.config.productionTip = false
 
+//* Imprimimos la variable de entorno
+const env_message = process.env.VUE_APP_ENV_MESSAGE
+console.log(env_message)
+
 new Vue ({
     router,
     store,
