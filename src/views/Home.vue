@@ -1,7 +1,13 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+    <div class="typer">
+      <h1>Type your <em>Hello</em> message:</h1>
+      <input v-model="helloMessage" />
+    </div>
+
+    <HelloWorld :msg="helloMessage"/>
   </div>
 </template>
 
@@ -13,6 +19,11 @@ export default {
   name: 'home',
   components: {
     HelloWorld
+  },
+  data () {
+    return {
+      helloMessage: 'Welcome to Your Vue.js App',
+    }
   }
 }
 </script>
