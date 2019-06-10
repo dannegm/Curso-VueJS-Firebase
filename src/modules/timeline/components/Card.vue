@@ -27,14 +27,14 @@ export default {
             type: String,
             required: true,
         },
-        timeAgo: {
-            type: Date,
+        timestamp: {
+            type: String,
             required: true,
         },
     },
     computed: {
         $moment () {
-            return moment(this.timeAgo)
+            return moment(this.timestamp)
         },
         hour () {
             return this.$moment.format('h:mm a')

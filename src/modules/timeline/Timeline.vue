@@ -4,18 +4,20 @@
         <div class="container">
             <Editor placeholder="¿Qué está pasando?" :on-post="createPost" />
 
-            <template v-for="post in posts.sort((a, b) => b.date - a.date)">
+            <template v-for="post in orderedPostByDate">
                 <Card
                     :key="post.uid"
                     :uid="post.uid"
                     :content="post.content"
-                    :time-ago="post.date" />
+                    :timestamp="post.date" />
             </template>
         </div>
     </div>
 </template>
 <script>
 import uuid from 'uuid/v4'
+import { mapActions, mapGetters } from 'vuex'
+
 import NavBar from '@/shared/layouts/NavBar'
 import Editor from '@/modules/timeline/components/Editor'
 import Card from '@/modules/timeline/components/Card'
@@ -28,22 +30,22 @@ export default {
         Card,
     },
     methods: {
+        ...mapActions('timeline', [
+            'storePost',
+        ]),
         createPost (content) {
             const postBody = {
                 uid: uuid (),
                 content,
                 date: new Date (), 
-            };
-            this.posts.push(postBody)
+            }
+            this.storePost(postBody)
         },
     },
-    data () {
-        return {
-            post: {
-                content: ''
-            },
-            posts: [],
-        }
+    computed: {
+        ...mapGetters('timeline', [
+            'orderedPostByDate',
+        ])
     }
 }
 </script>

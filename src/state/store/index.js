@@ -6,6 +6,7 @@ import createLogger from 'vuex/dist/logger'
 // Global store
 import actions from './actions'
 import mutations from './mutations'
+import getters from './getters'
 
 // Module stores
 import { Stores } from '@/modules/config'
@@ -35,5 +36,6 @@ export default new Vuex.Store ({
     strict: debug,
     state,
     actions,
-    mutations
+    mutations,
+    getters,
 })
