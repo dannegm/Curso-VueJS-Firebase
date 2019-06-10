@@ -10,6 +10,10 @@
                         {{hour}} - {{date}}
                     </time>
                 </div>
+
+                <figure v-if="picture !== undefined">
+                    <img :src="picture" />
+                </figure>
             </div>
         </div>
     </div>
@@ -31,6 +35,9 @@ export default {
             type: String,
             required: true,
         },
+        picture: {
+            type: String,
+        }
     },
     computed: {
         $moment () {

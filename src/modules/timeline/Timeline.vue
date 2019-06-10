@@ -9,6 +9,7 @@
                     :key="post.uid"
                     :uid="post.uid"
                     :content="post.content"
+                    :picture="post.attachment"
                     :timestamp="post.date" />
             </template>
         </div>
@@ -39,7 +40,7 @@ export default {
         ]),
         async createPost (content) {
             const postBody = {
-                content,
+                ...content,
                 uid: uuid (),
                 date: (new Date ()).toISOString(), 
             }
