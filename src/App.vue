@@ -1,10 +1,35 @@
 <template>
     <div class="app">
-        <ThemeController :is-dark="isDark">
-            <div class="hello">
-                <h1>Hola mundo :)</h1>
-                <button @click="toggleTheme">Alternar tema</button>
-            </div>
+        <ThemeController :is-dark="true">
+            <router-link name="{ name: 'timeline' }">Timeline</router-link>
+            <router-link name="{ name: 'login' }">Login</router-link>
+
+
+
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    </a>
+                </div>
+
+                <div id="navbarBasicExample" class="navbar-menu">
+                    <div class="navbar-start">
+                        <a @click="linkTo({ name: 'timeline' })" class="navbar-item">
+                            Timeline
+                        </a>
+                        <a @click="linkTo({ name: 'login' })" class="navbar-item">
+                            Login
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+
+
+            <router-view />
         </ThemeController>
     </div>
 </template>
@@ -16,41 +41,17 @@ export default {
         ThemeController
     },
     methods: {
+        linkTo (route) {
+            this.$router.push(route)
+        },
         toggleTheme () {
             this.isDark = !this.isDark
         }
     },
-    data () {
-        return {
-            isDark: false,
-        }
-    }
 }
 </script>
 
 <style lang="scss">
 .app {
-    .hello {
-        display: flex;
-        height: 100vh;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        h1 {
-            font-size: 2em;
-            margin: .5em;
-        }
-        button {
-            display: block;
-            margin: .5em;
-            font-size: 1em;
-            padding: .6em 1em;
-            outline: 0;
-            border: 0;
-            border-radius: 2em;
-            cursor: pointer;
-        }
-    }
 }
 </style>

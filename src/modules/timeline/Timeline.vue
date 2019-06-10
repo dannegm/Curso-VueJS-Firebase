@@ -1,5 +1,13 @@
 <template>
     <div class="timeline">
-        <h1>Timeline</h1>
+        <section class="hero is-medium is-primary is-bold">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">
+                        Timeline
+                    </h1>
+                </div>
+            </div>
+        </section>
     </div>
 </template>
