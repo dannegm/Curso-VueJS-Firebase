@@ -1,13 +1,58 @@
 <template>
     <div class="timeline">
-        <section class="hero is-medium is-primary is-bold">
-            <div class="hero-body">
-                <div class="container">
-                    <h1 class="title">
-                        Timeline
-                    </h1>
-                </div>
-            </div>
-        </section>
+        <NavBar />
+        <div class="container">
+            <Editor placeholder="¿Qué está pasando?" :on-post="createPost" />
+
+            <template v-for="post in posts.sort((a, b) => b.date - a.date)">
+                <Card
+                    :key="post.uid"
+                    :uid="post.uid"
+                    :content="post.content"
+                    :time-ago="post.date" />
+            </template>
+        </div>
     </div>
 </template>
+<script>
+import uuid from 'uuid/v4'
+import NavBar from '@/shared/layouts/NavBar'
+import Editor from '@/modules/timeline/components/Editor'
+import Card from '@/modules/timeline/components/Card'
+
+export default {
+    name: 'Timeline',
+    components: {
+        NavBar,
+        Editor,
+        Card,
+    },
+    methods: {
+        createPost (content) {
+            const postBody = {
+                uid: uuid (),
+                content,
+                date: new Date (), 
+            };
+            this.posts.push(postBody)
+        },
+    },
+    data () {
+        return {
+            post: {
+                content: ''
+            },
+            posts: [],
+        }
+    }
+}
+</script>
+<style lang="scss">
+.timeline {
+    .container {
+        width: 40%;
+        padding: 2em;
+        overflow: hidden;
+    }
+}
+</style>
