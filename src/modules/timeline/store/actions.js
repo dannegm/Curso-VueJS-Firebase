@@ -1,5 +1,5 @@
 import types from './types'
-import { db } from '@/shared/services/firebase/config'
+import { db, storage } from '@/shared/services/firebase/config'
 
 export default {
     async storePost ({ dispatch }, post) {
@@ -10,5 +10,20 @@ export default {
         const timelineSnapshot = await db.collection ('posts').get ()
         const posts = timelineSnapshot.docs.map (doc => doc.data())
         commit(types.SET_POSTS, posts)
+    },
+    storePicture ({ commit }, payload) {
+        const $storage = storage.ref()
+        const $picture = $storage.child (`pictures/${payload.picture.name}`)
+        const $uploader = $picture.put(payload.picture)
+
+        $uploader.on ('state_changed', null,
+            payload.handleError,
+            snapshot => {
+                payload.handleSuccess (snapshot, $picture)
+            }
+        );
+    },
+    downloadPicture ({ commit }, $reference) {
+        return $reference.getDownloadURL()
     }
 }
