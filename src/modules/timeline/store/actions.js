@@ -2,8 +2,13 @@ import types from './types'
 import { db } from '@/shared/services/firebase/config'
 
 export default {
-    async storePost ({ commit }, post) {
+    async storePost ({ dispatch }, post) {
         await db.collection ('posts').doc (post.uid).set (post)
-        commit (types.CREATE_POST, post)
+        dispatch('getPost')
+    },
+    async getPost ({ commit }) {
+        const timelineSnapshot = await db.collection ('posts').get ()
+        const posts = timelineSnapshot.docs.map (doc => doc.data())
+        commit(types.SET_POSTS, posts)
     }
 }

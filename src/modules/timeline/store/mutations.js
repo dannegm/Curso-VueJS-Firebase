@@ -1,7 +1,7 @@
 import types from './types';
 
 export default {
-    [types.CREATE_POST] (state, post) {
-        state.posts.push(post)
+    [types.SET_POSTS] (state, posts) {
+        state.posts = posts
     }
 }

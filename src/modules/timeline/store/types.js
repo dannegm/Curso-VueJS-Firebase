@@ -1,3 +1,3 @@
 export default {
-    CREATE_POST: 'CREATE_POST',
+    SET_POSTS: 'SET_POSTS',
 }

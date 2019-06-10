@@ -29,15 +29,19 @@ export default {
         Editor,
         Card,
     },
+    async mounted () {
+        await this.getPost ()
+    },
     methods: {
         ...mapActions('timeline', [
             'storePost',
+            'getPost'
         ]),
         async createPost (content) {
             const postBody = {
                 content,
                 uid: uuid (),
-                date: new Date (), 
+                date: (new Date ()).toISOString(), 
             }
             await this.storePost(postBody)
         },
