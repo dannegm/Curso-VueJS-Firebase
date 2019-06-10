@@ -33,13 +33,13 @@ export default {
         ...mapActions('timeline', [
             'storePost',
         ]),
-        createPost (content) {
+        async createPost (content) {
             const postBody = {
-                uid: uuid (),
                 content,
+                uid: uuid (),
                 date: new Date (), 
             }
-            this.storePost(postBody)
+            await this.storePost(postBody)
         },
     },
     computed: {
