@@ -1,8 +1,22 @@
 // Module Routers
-import loginRoutes from '@/modules/login/router';
-import timelineRoutes from '@/modules/timeline/router';
+import loginRoutes from './login/router';
+import timelineRoutes from './timeline/router';
 
-export default [
+// Module Stores
+import loginStore from './login/store';
+import timelineStore from './timeline/store'
+
+export const Routes = [
     ...loginRoutes,
     ...timelineRoutes,
-];
+]
+
+export const Stores = {
+    login: loginStore.module,
+    timeline: timelineStore.module,
+}
+
+export const InitialStates = {
+    login: { ...loginStore.state },
+    timeline: { ...timelineStore.state },
+}
