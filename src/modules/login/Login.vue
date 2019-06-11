@@ -1,13 +1,76 @@
 <template>
     <div class="login">
-        <section class="hero is-medium is-dark is-bold">
+        <section class="hero is-fullheight">
             <div class="hero-body">
-                <div class="container">
-                    <h1 class="title">
-                        Login
-                    </h1>
+                <div class="container has-text-centered">
+                    <div class="column is-4 is-offset-4">
+                        <div class="box">
+                            <h3 class="title has-text-grey">Postr</h3>
+                            <p class="subtitle has-text-grey">
+                                Inicia sesión con tu cuenta de <b>Google</b>.
+                            </p>
+
+                            <Action
+                                class="is-google"
+                                type="link"
+                                is-rounded
+                                is-block
+                                :dispatch="requestGoogleLogin">
+                                    Inicia con Google
+                            </Action>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
 </template>
+<script>
+import { mapActions, mapState } from 'vuex'
+import Action from '@/shared/components/Action'
+
+export default {
+    name: 'Login',
+    components: {
+        Action,
+    },
+    methods: {
+        ...mapActions('login', [
+            'requestGoogleLogin',
+        ])
+    },
+    mounted () {
+        if (this.auth.is) this.$router.push ({ name: 'timeline' })
+    },
+    computed: {
+        ...mapState('login', [
+            'auth',
+        ])
+    }
+}
+</script>
+
+<style lang="scss">
+.login {
+    .hero-body {
+        margin-top: -8em;
+    }
+
+    .box {
+        border: 0;
+        background: none;
+        box-shadow: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .title {
+            font-size: 1.4em;
+        }
+
+        .is-google {
+            background-color: #DF413C;
+        }
+    }
+}
+</style>

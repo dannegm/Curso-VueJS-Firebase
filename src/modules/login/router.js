@@ -2,7 +2,7 @@ import Login from './Login';
 
 export default [
     {
-        path: 'login',
+        path: '/login',
         name: 'login',
         component: Login,
     }

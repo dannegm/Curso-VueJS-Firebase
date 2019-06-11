@@ -8,8 +8,13 @@ export default {
     },
     async getPost ({ commit }) {
         const timelineSnapshot = await db.collection ('posts').get ()
-        const posts = timelineSnapshot.docs.map (doc => doc.data())
+        const posts = timelineSnapshot.docs.map (docs => docs.data())
         commit(types.SET_POSTS, posts)
+    },
+    async dispatchRealtime ({ commit }) {
+        db.collection ('posts').onSnapshot (docs => {
+            commit(types.POST_COUNTER, docs.size)
+        })
     },
     storePicture ({ commit }, payload) {
         const $storage = storage.ref()

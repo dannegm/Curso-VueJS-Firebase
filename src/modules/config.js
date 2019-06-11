@@ -6,9 +6,10 @@ import timelineRoutes from './timeline/router';
 import loginStore from './login/store';
 import timelineStore from './timeline/store'
 
+
 export const Routes = [
-    ...loginRoutes,
     ...timelineRoutes,
+    ...loginRoutes,
 ]
 
 export const Stores = {

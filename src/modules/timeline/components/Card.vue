@@ -2,18 +2,30 @@
     <div class="card">
         <div class="card animated fadeInDown">
             <div class="card-content">
-                <div class="content">
-                    {{ content }}
-                    <br>
-                    <time class="has-text-grey"
-                        :datetime="datetime">
-                        {{hour}} - {{date}}
-                    </time>
-                </div>
 
-                <figure v-if="picture !== undefined">
-                    <img :src="picture" />
-                </figure>
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-48x48">
+                            <img class="is-rounded" :src="author.photoURL" />
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="author">
+                            <strong>{{author.name}}</strong>
+                            <time class="has-text-grey"
+                                :datetime="datetime">
+                                {{date}} @ {{hour}}
+                            </time>
+                        </div>
+                        <div class="content">
+                            {{ content }}
+                        </div>
+
+                        <figure v-if="picture !== undefined">
+                            <img :src="picture" />
+                        </figure>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -27,6 +39,10 @@ export default {
             type: String,
             required: true,
         },
+        author: {
+            type: Object,
+            required: true,
+        },
         content: {
             type: String,
             required: true,
@@ -37,7 +53,7 @@ export default {
         },
         picture: {
             type: String,
-        }
+        },
     },
     computed: {
         $moment () {

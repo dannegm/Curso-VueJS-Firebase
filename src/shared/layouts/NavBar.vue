@@ -8,22 +8,37 @@
             </a>
         </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-menu">
             <div class="navbar-start">
                 <a @click="linkTo({ name: 'timeline' })" class="navbar-item">
-                    Timeline
+                    Inicio
                 </a>
-                <a @click="linkTo({ name: 'login' })" class="navbar-item">
-                    Login
-                </a>
+            </div>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <Action type="light" :dispatch="requestOut">
+                        Log out
+                    </Action>
+                </div>
             </div>
         </div>
     </nav>
 </template>
 <script>
+import { mapActions } from 'vuex'
+import Action from '@/shared/components/Action'
+
 export default {
     name: 'NavBar',
+    components: {
+        Action,
+    },
     methods: {
+        ...mapActions('login', [
+            'requestOut'
+        ]),
         linkTo (route) {
             this.$router.push(route)
         },
