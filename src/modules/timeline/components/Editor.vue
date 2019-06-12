@@ -17,7 +17,10 @@
 
                         <div class="columns">
                             <div class="column buttons">
-                                <Action type="primary" :dispatch="dispatchPost">
+                                <Action
+                                    type="link"
+                                    :dispatch="dispatchPost"
+                                    :is-disabled="disablePostAction">
                                     Publicar
                                 </Action>
 
@@ -30,6 +33,9 @@
                                 <Action
                                     :is-loading="picture.isUploading"
                                     @click="$refs.filePicker.click()">
+                                    <span class="icon">
+                                        <i class="fas fa-search"></i>
+                                    </span>
                                     <span>Explorar imagen</span>
                                 </Action>
                             </div>
@@ -38,6 +44,7 @@
                         <div class="columns" v-if="picture.url">
                             <div class="column is-half">
                                 <figure class="image">
+                                    <a class="delete" @click="removePicture"></a>
                                     <img :src="picture.url">
                                 </figure>
                             </div>
@@ -81,7 +88,7 @@ export default {
                 attachment: this.picture.url,
             })
             this.message = ''
-            this.picture.url = ''
+            this.picture.url = null
         },
         fileChange ({ files }) {
             this.handleUpload (files [0])
@@ -97,6 +104,9 @@ export default {
                 },
             })
         },
+        removePicture () {
+            this.picture.url = null
+        }
     },
     data () {
         return {
@@ -105,6 +115,11 @@ export default {
                 url: null,
                 isUploading: false,
             }
+        }
+    },
+    computed: {
+        disablePostAction () {
+            return this.picture.isUploading || this.message.trim() == ''
         }
     }
 }

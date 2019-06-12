@@ -13,10 +13,16 @@
                             <Action
                                 class="is-google"
                                 type="link"
+                                size="medium"
                                 is-rounded
                                 is-block
                                 :dispatch="requestGoogleLogin">
-                                    Inicia con Google
+                                    <span class="icon">
+                                        <i class="fab fa-google"></i>
+                                    </span>
+                                    <span>
+                                        Inicia con Google
+                                    </span>
                             </Action>
                         </div>
                     </div>
@@ -65,7 +71,7 @@ export default {
         align-items: center;
 
         .title {
-            font-size: 1.4em;
+            font-size: 2em;
         }
 
         .is-google {

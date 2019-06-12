@@ -75,7 +75,8 @@ export default {
             'orderedPostByDate',
         ]),
         postAhead () {
-            return this.postCounter - this.orderedPostByDate.length
+            const postAhead = this.postCounter - this.orderedPostByDate.length
+            return postAhead > 0 ? (postAhead > 99 ? '+99' : postAhead) : 0
         }
     }
 }

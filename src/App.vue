@@ -1,18 +1,12 @@
 <template>
     <div class="app">
-        <ThemeController>
-            <router-view />
-        </ThemeController>
+        <router-view />
     </div>
 </template>
 <script>
 import { mapActions } from 'vuex'
-import ThemeController from '@/shared/layouts/ThemeController'
 export default {
     name: 'App',
-    components: {
-        ThemeController,
-    },
     methods: {
         ...mapActions('login', [
             'checkLogin',
@@ -23,3 +17,9 @@ export default {
     },
 }
 </script>
+<style lang="scss">
+body {
+    background-color: #fafafa;
+}
+</style>
+
