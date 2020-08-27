@@ -1,9 +1,9 @@
-import Timeline from './Timeline';
+import Timeline from "./Timeline";
 
 export default [
-    {
-        path: '/',
-        name: 'timeline',
-        component: Timeline,
-    }
+  {
+    path: "/",
+    name: "timeline",
+    component: Timeline,
+  },
 ];
