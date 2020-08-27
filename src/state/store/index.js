@@ -1,36 +1,36 @@
-import { createStore, createLogger } from "vuex";
-import VuexPersistence from "vuex-persist";
+import { createStore, createLogger } from 'vuex';
+import VuexPersistence from 'vuex-persist';
 
 // Global store
-import getters from "./getters";
-import actions from "./actions";
-import mutations from "./mutations";
+import getters from './getters';
+import actions from './actions';
+import mutations from './mutations';
 
 // Module stores
-import { Stores } from "@/modules/config";
+import { Stores } from '@/modules/config';
 
-const debug = process.env.NODE_ENV !== "production";
+const debug = process.env.NODE_ENV !== 'production';
 
 const vuexLocal = new VuexPersistence({
-  storage: window.localStorage,
+    storage: window.localStorage,
 });
 
 const plugins = (debug) => {
-  let plugins = [vuexLocal.plugin];
-  if (debug) plugins.unshift(createLogger());
-  return plugins;
+    let plugins = [vuexLocal.plugin];
+    if (debug) plugins.unshift(createLogger());
+    return plugins;
 };
 
 const state = {};
 
 export default createStore({
-  modules: {
-    ...Stores,
-  },
-  plugins: plugins(debug),
-  strict: debug,
-  state,
-  getters,
-  actions,
-  mutations,
+    modules: {
+        ...Stores,
+    },
+    plugins: plugins(debug),
+    strict: debug,
+    state,
+    getters,
+    actions,
+    mutations,
 });

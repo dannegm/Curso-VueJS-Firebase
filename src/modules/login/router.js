@@ -1,9 +1,9 @@
-import Login from "./Login";
+import Login from './Login';
 
 export default [
-  {
-    path: "/login",
-    name: "login",
-    component: Login,
-  },
+    {
+        path: '/login',
+        name: 'login',
+        component: Login,
+    },
 ];
