@@ -11,13 +11,13 @@ export default {
         isDark: {
             type: Boolean,
             default: false,
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style lang="scss">
-$blue-gray-50: #ECEFF1;
+$blue-gray-50: #eceff1;
 $blue-gray-900: #263238;
 
 .theme-container {
@@ -26,10 +26,10 @@ $blue-gray-900: #263238;
     padding: 0;
     width: 100%;
     height: 100%;
-    transition: background .2s, color .1s;
+    transition: background 0.2s, color 0.1s;
 
     * {
-        transition: background .2s, color .1s;
+        transition: background 0.2s, color 0.1s;
     }
 
     &.clear {
@@ -37,7 +37,7 @@ $blue-gray-900: #263238;
         color: $blue-gray-900;
 
         button {
-            background: #0288D1;
+            background: #0288d1;
             color: #fff;
         }
     }
@@ -47,10 +47,9 @@ $blue-gray-900: #263238;
         color: $blue-gray-50;
 
         button {
-            background: #FFEB3B;
+            background: #ffeb3b;
             color: #000;
         }
     }
 }
 </style>
-

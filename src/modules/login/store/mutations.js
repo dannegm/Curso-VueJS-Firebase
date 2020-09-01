@@ -1,15 +1,14 @@
 import types from './types';
 
 export default {
-    [types.LOGIN_ACTION] (state, user) {
-        
+    [types.LOGIN_ACTION](state, user) {
         state.user = user;
         state.auth = {
             is: true,
             uid: user.uid,
-        }
+        };
     },
-    [types.LOGOUT_ACTION] (state) {
+    [types.LOGOUT_ACTION](state) {
         state.user = {
             photoURL: '',
             email: '',
@@ -19,5 +18,5 @@ export default {
             uid: null,
             unauthorized: false,
         };
-    }
-}
+    },
+};

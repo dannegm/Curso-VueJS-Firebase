@@ -17,10 +17,7 @@
 
                         <div class="columns">
                             <div class="column buttons">
-                                <Action
-                                    type="link"
-                                    :dispatch="dispatchPost"
-                                    :is-disabled="disablePostAction">
+                                <Action type="link" :is-disabled="isActionDisabled" @click="dispatchPost">
                                     Publicar
                                 </Action>
 
@@ -28,11 +25,10 @@
                                     type="file"
                                     class="hidden"
                                     ref="filePicker"
-                                    @change="fileChange($event.target)" />
+                                    @change="handleUpload($event.target)"
+                                />
 
-                                <Action
-                                    :is-loading="picture.isUploading"
-                                    @click="$refs.filePicker.click()">
+                                <Action :is-loading="isUploadingPicture" @click="$refs.filePicker.click()">
                                     <span class="icon">
                                         <i class="fas fa-search"></i>
                                     </span>
@@ -41,11 +37,11 @@
                             </div>
                         </div>
 
-                        <div class="columns" v-if="picture.url">
+                        <div class="columns" v-if="picture">
                             <div class="column is-half">
                                 <figure class="image">
                                     <a class="delete" @click="removePicture"></a>
-                                    <img :src="picture.url">
+                                    <img :src="picture" />
                                 </figure>
                             </div>
                         </div>
@@ -56,8 +52,12 @@
     </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import Action from '@/shared/components/Action'
+import { useStore } from 'vuex';
+import Action from '@/shared/components/Action';
+import { ref } from 'vue';
+import { reactive } from 'vue';
+import { toRefs } from 'vue';
+import { computed } from 'vue';
 
 export default {
     name: 'Editor',
@@ -71,58 +71,67 @@ export default {
         },
         placeholder: {
             type: String,
-            default: 'Lorem ipsum...'
+            default: 'Lorem ipsum...',
         },
-        onPost: {
-            type: Function,
-        }
     },
-    methods: {
-        ...mapActions('timeline', [
-            'storePicture',
-            'downloadPicture'
-        ]),
-        async dispatchPost () {
-            await this.onPost ({
-                content: this.message,
-                attachment: this.picture.url,
-            })
-            this.message = ''
-            this.picture.url = null
-        },
-        fileChange ({ files }) {
-            this.handleUpload (files [0])
-        },
-        handleUpload (file) {
-            this.picture.isUploading = true
-            this.storePicture({
-                picture: file,
-                handleError: console.error,
-                handleSuccess: async (snapshot, $picture) => {
-                    this.picture.url = await this.downloadPicture ($picture)
-                    this.picture.isUploading = false
-                },
-            })
-        },
-        removePicture () {
-            this.picture.url = null
-        }
-    },
-    data () {
+
+    setup(props, { emit }) {
+        const store = useStore();
+
+        const storePicture = (payload) => store.dispatch('timeline/storePicture', payload);
+        const downloadPicture = (payload) => store.dispatch('timeline/downloadPicture', payload);
+
+        const message = ref('');
+        const picture = ref('');
+        const isUploadingPicture = ref(false);
+        const isActionDisabled = computed(() => isUploadingPicture.value || !message.value.trim());
+
+        const dispatchPost = () => {
+            emit('post', {
+                content: message.value,
+                attachment: picture.value,
+            });
+
+            console.log('se dispatchea');
+
+            message.value = '';
+            picture.value = '';
+        };
+
+        const handleUploadSuccess = async (snapshot, $picture) => {
+            picture.value = await downloadPicture($picture);
+            isUploadingPicture.value = false;
+        };
+
+        const handleUploadError = (err) => {
+            console.error(err);
+            isUploadingPicture.value = false;
+        };
+
+        const handleUpload = ({ files }) => {
+            isUploadingPicture.value = true;
+
+            storePicture({
+                picture: files[0],
+                handleError: handleUploadError,
+                handleSuccess: handleUploadSuccess,
+            });
+        };
+
+        const removePicture = () => (picture.value = '');
+
         return {
-            message: '',
-            picture: {
-                url: null,
-                isUploading: false,
-            }
-        }
+            ...props,
+            message,
+            picture,
+            isActionDisabled,
+            isUploadingPicture,
+            dispatchPost,
+            handleUpload,
+            removePicture,
+        };
     },
-    computed: {
-        disablePostAction () {
-            return this.picture.isUploading || this.message.trim() == ''
-        }
-    }
-}
+};
 </script>
 <style lang="scss">
 .editor {
@@ -131,4 +140,3 @@ export default {
     }
 }
 </style>
-

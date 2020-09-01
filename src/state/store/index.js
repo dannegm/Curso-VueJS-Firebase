@@ -1,41 +1,36 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
-import createLogger from 'vuex/dist/logger'
+import { createStore, createLogger } from 'vuex';
+import VuexPersistence from 'vuex-persist';
 
 // Global store
-import actions from './actions'
-import mutations from './mutations'
-import getters from './getters'
+import getters from './getters';
+import actions from './actions';
+import mutations from './mutations';
 
 // Module stores
-import { Stores } from '@/modules/config'
-
-Vue.use (Vuex)
+import { Stores } from '@/modules/config';
 
 const debug = process.env.NODE_ENV !== 'production';
-const plugins = debug => {
-    let plugins = [
-        createPersistedState ({
-            key: 'store'
-        })
-    ]
-    if (debug) plugins.unshift(createLogger())
+
+const vuexLocal = new VuexPersistence({
+    storage: window.localStorage,
+});
+
+const plugins = (debug) => {
+    let plugins = [vuexLocal.plugin];
+    if (debug) plugins.unshift(createLogger());
     return plugins;
-}
+};
 
-const state = {
+const state = {};
 
-}
-
-export default new Vuex.Store ({
+export default createStore({
     modules: {
-        ...Stores
+        ...Stores,
     },
     plugins: plugins(debug),
     strict: debug,
     state,
+    getters,
     actions,
     mutations,
-    getters,
-})
+});

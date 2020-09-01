@@ -1,6 +1,6 @@
-import actions from './actions'
-import mutations from './mutations'
-import getters from './getters'
+import actions from './actions';
+import mutations from './mutations';
+import getters from './getters';
 
 const state = {
     auth: {
@@ -11,7 +11,7 @@ const state = {
         photoURL: '',
         email: '',
     },
-}
+};
 
 export default {
     state,
@@ -21,5 +21,5 @@ export default {
         actions,
         mutations,
         getters,
-    }
-}
+    },
+};

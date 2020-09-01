@@ -1,4 +1,3 @@
-import types from './types'
+import types from './types';
 
-export default {
-}
+export default {};

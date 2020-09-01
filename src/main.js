@@ -1,15 +1,12 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './state/router'
-import store from './state/store'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './state/router';
+import store from './state/store';
 
-import 'bulma'
-import 'animate.css'
+import 'bulma';
+import 'animate.css';
 
-Vue.config.productionTip = false
+const app = createApp(App);
 
-new Vue ({
-    router,
-    store,
-    render: h => h(App)
-}).$mount('#app')
+app.use(router).use(store);
+app.mount('#app');

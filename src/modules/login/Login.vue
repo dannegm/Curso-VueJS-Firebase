@@ -6,9 +6,7 @@
                     <div class="column is-4 is-offset-4">
                         <div class="box">
                             <h3 class="title has-text-grey">Postr</h3>
-                            <p class="subtitle has-text-grey">
-                                Inicia sesión con tu cuenta de <b>Google</b>.
-                            </p>
+                            <p class="subtitle has-text-grey">Inicia sesión con tu cuenta de <b>Google</b>.</p>
 
                             <Action
                                 class="is-google"
@@ -16,13 +14,12 @@
                                 size="medium"
                                 is-rounded
                                 is-block
-                                :dispatch="requestGoogleLogin">
-                                    <span class="icon">
-                                        <i class="fab fa-google"></i>
-                                    </span>
-                                    <span>
-                                        Inicia con Google
-                                    </span>
+                                :dispatch="requestGoogleLogin"
+                            >
+                                <span class="icon">
+                                    <i class="fab fa-google"></i>
+                                </span>
+                                <span> Inicia con Google </span>
                             </Action>
                         </div>
                     </div>
@@ -32,28 +29,24 @@
     </div>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex'
-import Action from '@/shared/components/Action'
+import { onMounted } from 'vue';
+import { useStore } from 'vuex';
+import Action from '@/shared/components/Action';
 
 export default {
     name: 'Login',
     components: {
         Action,
     },
-    methods: {
-        ...mapActions('login', [
-            'requestGoogleLogin',
-        ])
+    setup() {
+        const store = useStore();
+        const requestGoogleLogin = () => store.dispatch('login/requestGoogleLogin');
+
+        return {
+            requestGoogleLogin,
+        };
     },
-    mounted () {
-        if (this.auth.is) this.$router.push ({ name: 'timeline' })
-    },
-    computed: {
-        ...mapState('login', [
-            'auth',
-        ])
-    }
-}
+};
 </script>
 
 <style lang="scss">
@@ -75,7 +68,7 @@ export default {
         }
 
         .is-google {
-            background-color: #DF413C;
+            background-color: #df413c;
         }
     }
 }

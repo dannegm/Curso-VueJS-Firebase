@@ -1,13 +1,10 @@
 <template>
-    <button
-        class="button"
-        :class="classBuilder"
-        :disabled="isDisabled"
-        @click="onClick($event)">
+    <button class="button" :class="classBuilder" :disabled="isDisabled" @click="onClick($event)">
         <slot></slot>
     </button>
 </template>
 <script>
+import { ref, computed, toRefs } from 'vue';
 export default {
     name: 'Action',
     props: {
@@ -55,37 +52,44 @@ export default {
             type: Function,
         },
     },
-    methods: {
-        async onClick ($event) {
-            if (this.dispatch === undefined) return this.$emit('click', $event)
-            this.internalLoading = true
+
+    setup(props, { emit }) {
+        const internalLoading = ref(false);
+
+        const classBuilder = computed(() => {
+            return {
+                [`is-${props.type}`]: true,
+                [`is-${props.size}`]: true,
+                'is-fullwidth': props.isBlock,
+                'is-outlined': props.isOutlined,
+                'is-inverted': props.isInverted,
+                'is-rounded': props.isRounded,
+                'is-right': props.isRight,
+                'is-centered': props.isCentered,
+                'is-loading': props.isLoading || internalLoading.value,
+            };
+        });
+
+        const onClick = async ($event) => {
+            if (props.dispatch === undefined) return emit('click', $event);
+
+            internalLoading.value = true;
+
             try {
-                const result = await this.dispatch ()
-                this.internalLoading = false
-                this.$emit('success', result)
+                const result = await props.dispatch();
+                internalLoading.value = false;
+                emit('success', result);
             } catch (reject) {
-                this.internalLoading = false
-                this.$emit('error', reject)
+                internalLoading.value = false;
+                emit('error', reject);
             }
-        }
-    },
-    data () {
+        };
+
         return {
-            internalLoading: false
-        }
+            ...toRefs(props),
+            classBuilder,
+            onClick,
+        };
     },
-    computed: {
-        classBuilder () {
-            let classes = `is-${this.type} is-${this.size} `
-                classes += this.isBlock ? 'is-fullwidth ' : ''
-                classes += this.isOutlined ? 'is-outlined ' : ''
-                classes += this.isInverted ? 'is-inverted ' : ''
-                classes += this.isRounded ? 'is-rounded ' : ''
-                classes += this.isRight ? 'is-right ' : ''
-                classes += this.isCentered ? 'is-centered ' : ''
-                classes += this.isLoading || this.internalLoading ? 'is-loading ' : ''
-            return classes
-        }
-    }
-}
+};
 </script>
