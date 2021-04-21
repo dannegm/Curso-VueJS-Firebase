@@ -3,7 +3,6 @@
     <slot />
   </div>
 </template>
-
 <script>
 export default {
   name: "ThemeProvider",
@@ -13,7 +12,6 @@ export default {
       default: false,
     },
   },
-
   computed: {
     darkModeClass() {
       return {
@@ -23,14 +21,12 @@ export default {
   },
 };
 </script>
-
 <style lang="scss" scoped>
 .theme-provider {
   background: white;
   color: black;
   min-height: 100vh;
   overflow: hidden;
-
   &--darkmode {
     background: black;
     color: white;
