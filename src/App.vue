@@ -1,16 +1,14 @@
 <template>
   <div class="app">
-    <Navbar :routes="routes" @login="onLogin"> </Navbar>
-
+    <Navbar :routes="routes" @login="onLogin" />
     <ThemeProvider :is-dark="isDarkMode">
       <router-view></router-view>
-      <button @click="toggleDarkMode">
-        {{ computedButtonLabel }}
-      </button>
     </ThemeProvider>
   </div>
 </template>
 <script>
+import { mapState, mapActions } from "vuex";
+
 import Navbar from "@/shared/layout/Navbar";
 import ThemeProvider from "@/shared/layout/ThemeProvider";
 export default {
@@ -21,7 +19,6 @@ export default {
   },
   data() {
     return {
-      isDarkMode: false,
       routes: [
         {
           path: "/",
@@ -37,16 +34,19 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      isDarkMode: (s) => s.isDark,
+    }),
+
     computedButtonLabel() {
       return this.isDarkMode ? "Desactivar Dark Mode" : "Activar Dark Mode";
     },
   },
   methods: {
+    ...mapActions(["toggleDarkMode"]),
+
     onLogin() {
       alert("Se ha ejecutado el login");
-    },
-    toggleDarkMode() {
-      this.isDarkMode = !this.isDarkMode;
     },
   },
 };
