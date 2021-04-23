@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // function isOwner(postID) {
+    //   let uid = request.auth.uid;
+    //   let doc = get(/databases/{database}/documents/posts/$(postID))
+    //   return uid == doc.author.uid;
+    // }
+
+    match /posts {
+      allow read, write;
+    }
+
+    // match /posts/{document=**} {
+    //   allow read;
+    //   allow write: if isOwner({document=**});
+    // }
+
+  }
+}

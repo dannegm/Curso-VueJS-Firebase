@@ -3,9 +3,14 @@
     <div class="card">
       <div class="card-content">
         <div class="media">
+          <div class="media-left">
+            <figure class="image is-48x48">
+              <img class="is-rounded" :src="authorPhoto" />
+            </figure>
+          </div>
           <div class="media-content">
             <p class="title is-3">{{ authorName }}</p>
-            <p class="subtitle is-6">@{{ authorUsername }}</p>
+            <p class="subtitle is-6">{{ authorUsername }}</p>
           </div>
         </div>
 
@@ -27,6 +32,10 @@ export default {
     postId: {
       type: String,
       required: true,
+    },
+    authorPhoto: {
+      type: String,
+      default: "#",
     },
     authorName: {
       type: String,

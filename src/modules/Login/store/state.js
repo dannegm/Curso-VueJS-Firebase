@@ -1,4 +1,3 @@
 export const initialState = {
-  posts: [],
-  error: null,
+  user: null,
 };

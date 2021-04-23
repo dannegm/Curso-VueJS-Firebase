@@ -5,6 +5,7 @@
         :post-id="post.id"
         :author-name="post.author.name"
         :author-username="post.author.username"
+        :author-photo="post.author.photoURL"
         :message="post.content.message"
         :time="post.content.time"
       />

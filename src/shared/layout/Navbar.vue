@@ -27,8 +27,11 @@
 
       <div class="navbar-end">
         <div class="navbar-item">
+          <img class="avatar" :src="user.photoURL" />
+        </div>
+        <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-light" @click="onLogin"> Log in </a>
+            <a class="button is-light" @click="onLogout">Log Out</a>
           </div>
         </div>
       </div>
@@ -40,6 +43,12 @@
 export default {
   name: "Navbar",
   props: {
+    user: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
     routes: {
       type: Array,
       default() {
@@ -56,10 +65,21 @@ export default {
       },
     },
   },
+  mounted() {
+    console.log(this.user);
+  },
   methods: {
-    onLogin() {
-      this.$emit("login");
+    onLogout() {
+      this.$emit("logout");
     },
   },
 };
 </script>
+
+<style lang="scss">
+.navbar {
+  .avatar {
+    border-radius: 50%;
+  }
+}
+</style>
