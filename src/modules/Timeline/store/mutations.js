@@ -1,19 +1,35 @@
-import { CREATE_POST, SET_ERROR, CLEAN_ERROR, STORE_POSTS } from "./types";
+import types from "./types";
 
 export default {
-  [CREATE_POST](state, payload) {
+  [types.CREATE_POST](state, payload) {
     const copyPosts = [...state.posts];
     copyPosts.push(payload);
     state.posts = copyPosts;
   },
 
-  [SET_ERROR](state, error) {
+  [types.SET_ERROR](state, error) {
     state.error = error;
   },
-  [CLEAN_ERROR](state) {
+  [types.CLEAN_ERROR](state) {
     state.error = null;
   },
-  [STORE_POSTS](state, payload) {
+  [types.STORE_POSTS](state, payload) {
     state.posts = payload;
+  },
+
+  [types.SET_PICTURE_URL](state, payload) {
+    state.picture.url = payload;
+  },
+  [types.CLEAN_PICTURE_URL](state) {
+    state.picture.url = "";
+  },
+  [types.SET_PICTURE_UPLOADING](state, payload) {
+    state.picture.isUploading = payload;
+  },
+  [types.CLEAR_POST_COUNT](state) {
+    state.postCount = 0;
+  },
+  [types.SET_POST_COUNT](state, payload) {
+    state.postCount = payload;
   },
 };

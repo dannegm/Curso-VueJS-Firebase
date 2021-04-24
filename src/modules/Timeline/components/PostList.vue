@@ -7,6 +7,7 @@
         :author-username="post.author.username"
         :author-photo="post.author.photoURL"
         :message="post.content.message"
+        :picture="post.content.picture"
         :time="post.content.time"
       />
     </template>

@@ -12,6 +12,15 @@
         </div>
         <br />
       </template>
+
+      <template v-if="formatedPostCount">
+        <br />
+        <button class="button is-medium is-info is-fullwidth" @click="getPosts">
+          {{ formatedPostCount }} nuevas publicaciones
+        </button>
+        <br />
+      </template>
+
       <PostList :posts="orderedPosts" />
     </Container>
   </div>
@@ -45,14 +54,20 @@ export default {
   },
   computed: {
     ...mapState("timeline", ["error"]),
-    ...mapGetters("timeline", ["orderedPosts"]),
+    ...mapGetters("timeline", ["orderedPosts", "formatedPostCount"]),
     ...mapGetters("login", ["cleanUser"]),
   },
   mounted() {
     this.getPosts();
+    this.dispatchRealtime();
   },
   methods: {
-    ...mapActions("timeline", ["getPosts", "cleanError", "createPost"]),
+    ...mapActions("timeline", [
+      "getPosts",
+      "cleanError",
+      "createPost",
+      "dispatchRealtime",
+    ]),
     ...mapActions("login", ["requestLogout"]),
     onPostCreate(payload) {
       this.createPost(payload);

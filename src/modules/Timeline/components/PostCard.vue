@@ -16,6 +16,16 @@
 
         <div class="content">
           {{ message }}
+
+          <template v-if="picture">
+            <div class="picture">
+              <br />
+              <figure>
+                <img :src="picture" />
+              </figure>
+              <br />
+            </div>
+          </template>
           <br />
           <time datetime="time">{{ computedDateTime }}</time>
         </div>
@@ -52,6 +62,10 @@ export default {
     time: {
       type: Number,
       required: true,
+    },
+    picture: {
+      type: String,
+      default: "",
     },
   },
   computed: {
